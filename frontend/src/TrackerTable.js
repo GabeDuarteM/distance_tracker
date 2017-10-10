@@ -6,8 +6,11 @@ import Table, {
   TableRow
 } from "material-ui/Table"
 import Paper from "material-ui/Paper"
+import { IconButton } from "material-ui"
+import DeleteIcon from "material-ui-icons/Delete"
+import axios from "axios"
 
-const TrackerTable = ({ trackers }) => (
+const TrackerTable = ({ trackers, getListTrackers }) => (
   <Paper style={{ margin: 32 }}>
     <Table>
       <TableHead>
@@ -16,7 +19,6 @@ const TrackerTable = ({ trackers }) => (
           <TableCell>Activity</TableCell>
           <TableCell numeric>Distance</TableCell>
           <TableCell>Completed at</TableCell>
-          <TableCell>uuid</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -27,7 +29,14 @@ const TrackerTable = ({ trackers }) => (
               <TableCell>{n.activity}</TableCell>
               <TableCell numeric>{n.distance}</TableCell>
               <TableCell>{n.completed_at}</TableCell>
-              <TableCell>{n.uuid}</TableCell>
+              <TableCell>
+                <IconButton
+                  onClick={() => handleClickDelete(n.id, getListTrackers)}
+                  aria-label="Delete"
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
             </TableRow>
           )
         })}
@@ -35,5 +44,10 @@ const TrackerTable = ({ trackers }) => (
     </Table>
   </Paper>
 )
+
+const handleClickDelete = async (id, getListTrackers) => {
+  await axios.delete(`http://localhost:4000/api/v1/trackers/${id}`)
+  getListTrackers()
+}
 
 export default TrackerTable

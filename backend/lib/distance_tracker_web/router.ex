@@ -9,8 +9,9 @@ defmodule DistanceTrackerWeb.Router do
   scope "/api", DistanceTrackerWeb do
     pipe_through :api
     scope "/v1" do
-      resources "/trackers", TrackerController, except: [:new, :edit]
+      resources "/trackers", TrackerController
       options "/trackers", TrackerController, :nothing
+      options "/trackers/:id", TrackerController, :nothing
     end
   end
 end

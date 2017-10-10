@@ -30,8 +30,13 @@ class ListTrackers extends React.Component {
         getListTrackers={this.getListTrackers}
       />,
       !this.state.loadingTrackers &&
-        this.state.trackers && (
-          <TrackerTable key="TrackerTable" trackers={this.state.trackers} />
+        this.state.trackers &&
+        this.state.trackers.length > 0 && (
+          <TrackerTable
+            key="TrackerTable"
+            getListTrackers={this.getListTrackers}
+            trackers={this.state.trackers}
+          />
         )
     ]
   }
